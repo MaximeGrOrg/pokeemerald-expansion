@@ -2112,6 +2112,7 @@ static u32 GetBestMonIntegrated(struct Pokemon *party, int firstId, int lastId, 
     u32 bestResist = AI_TYPE_MATCHUP_THRESHOLD, bestResistEffective = AI_TYPE_MATCHUP_THRESHOLD, typeMatchup; // 2.0 is the default "Neutral" matchup from GetBattlerTypeMatchup
     bool32 isFreeSwitch = IsFreeSwitch(switchType, battlerIn1, opposingBattler), isSwitchinFirst, isSwitchinFirstPriority, canSwitchinWin1v1;
     u32 validMonIds = 0;
+    u32 storeCurrBattlerPartyIndex = gBattlerPartyIndexes[battler]; // Rage Fist fix
 
     GetIncomingHealInfo(battler, &healInfoData);
 
@@ -2139,6 +2140,7 @@ static u32 GetBestMonIntegrated(struct Pokemon *party, int firstId, int lastId, 
             validMonIds |= (1u << monIndex);
         }
 
+        gBattlerPartyIndexes[battler] = monIndex; // Rage Fist fix
         InitializeSwitchinCandidate(battler, &party[monIndex]);
 
         u32 originalHp = gBattleMons[battler].hp;
@@ -2317,6 +2319,7 @@ static u32 GetBestMonIntegrated(struct Pokemon *party, int firstId, int lastId, 
     FreeRestoreAiLogicData(savedAiLogicData);
     FreeRestoreBattleMons(savedBattleMons);
     SetBattlerAiData(battler, gAiLogicData);
+    gBattlerPartyIndexes[battler] = storeCurrBattlerPartyIndex; // Rage Fist fix
 
     // GetSwitchinCandidate returns either the *last* party mon that met a threshold (without AI_FLAG_RANDOMIZE_SWITCHIN), or a random one that met a threshold
     // If we aren't using AI_FLAG_RANDOMIZE_SWITCHIN there are cases where we don't want the *last* mon, we want the *best* mon

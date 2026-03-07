@@ -43,13 +43,13 @@ static u32 GetWishHealAmountForBattler(enum BattlerId battler);
 
 static void InitializeSwitchinCandidate(enum BattlerId switchinBattler, u32 monIndex, struct Pokemon *mon)
 {
-    u32 storeCurrBattlerPartyIndex = gBattlerPartyIndexes[switchinBattler]; // Rage Fist fix
     gBattlerPartyIndexes[switchinBattler] = monIndex;
     PokemonToBattleMon(mon, &gBattleMons[switchinBattler]);
     // Setup switchin battler data
     gAiThinkingStruct->saved[switchinBattler].saved = TRUE;
     SetBattlerAiData(switchinBattler, gAiLogicData);
     SetBattlerFieldStatusForSwitchin(switchinBattler);
+    u32 storeCurrBattlerPartyIndex = gBattlerPartyIndexes[switchinBattler]; // Rage Fist fix
     for (enum BattlerId battlerIndex = 0; battlerIndex < gBattlersCount; battlerIndex++)
     {
         if (switchinBattler == battlerIndex || !IsBattlerAlive(battlerIndex))

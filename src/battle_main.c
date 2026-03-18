@@ -4014,6 +4014,12 @@ void BattleTurnPassed(void)
             gBattleStruct->battlerState[battler].stompingTantrumTimer--;
     }
 
+    for (i = 0; i < NUM_BATTLE_SIDES; i++)
+    {
+        if (gSideTimers[i].retaliateTimer > 0)
+            gSideTimers[i].retaliateTimer--;
+    }    
+
     gFieldStatuses &= ~STATUS_FIELD_ION_DELUGE;
 
     BattlePutTextOnWindow(gText_EmptyString3, B_WIN_MSG);

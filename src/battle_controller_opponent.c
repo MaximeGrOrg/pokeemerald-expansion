@@ -549,6 +549,12 @@ static void OpponentHandleChooseItem(enum BattlerId battler)
 
 static void OpponentHandleChoosePokemon(enum BattlerId battler)
 {
+    int i;
+    for (i = 0; i < NUM_BATTLE_SIDES; i++)
+    {
+        if (gSideTimers[i].retaliateTimer > 0)
+            gSideTimers[i].retaliateTimer--;
+    }
     s32 chosenMonId;
     enum SwitchType switchType = SWITCH_AFTER_KO;
 
